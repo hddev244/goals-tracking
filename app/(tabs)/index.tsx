@@ -1,74 +1,89 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  useWindowDimensions,
+} from "react-native";
+import { useState, useEffect } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import { Link, Stack, useNavigation } from "expo-router";
+import CircleButtonNavigate from "@/components/common/CircleButtonNavigate";
+import { FontAwesome6 } from "@expo/vector-icons";
+import { Button } from "@/components/common/manual-platform/Button/Button";
+const TasksScreen = () => {
+  const windownWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+  const navigation = useNavigation();
 
-export default function HomeScreen() {
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+
+      <View style={styles.container}>
+
+
+               <Text>CÔng việc</Text>
+        <Link href={"/create-goal"}>
+          <Text>Go to Info</Text>
+        </Link>
+
+        <CircleButtonNavigate
+          to={"/create-goal"}
+          size={64}
+          icon={<FontAwesome6 name="plus" size={28} color="white" />}
+          style={{
+            position: 'absolute',
+            bottom: 25,
+            right: 25,
+          }}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      </View>
   );
-}
+};
+
+export default TasksScreen;
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  item: {
+    backgroundColor: "white",
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  emptyDate: {
+    height: 15,
+    flex: 1,
+    paddingTop: 30,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  safeContainer : {
+    flex: 1,
+    backgroundColor: "lightblue",
+},
+  container: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  background: {
     position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 300,
+  },
+  button: {
+    padding: 15,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  text: {
+    backgroundColor: 'transparent',
+    fontSize: 15,
+    color: '#fff',
   },
 });
