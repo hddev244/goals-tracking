@@ -1,8 +1,12 @@
 import { Pressable, StyleSheet, Text } from "react-native";
-import { ButtonProps } from "./Button";
+import { ButtonProps, variantStyle } from "./Button";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome6 } from "@expo/vector-icons";
-const ButtonAndroid = ({ onPress, title, style, linerGradient = ["#7F7FD5", "#86A8E7", "#91EAE4"] }: ButtonProps) => {
+import { ThemedText } from "@/components/ThemedText";
+
+
+const ButtonAndroid = ({ onPress, title, style, linerGradient = [" #4facfe", " #00f2fe", "#0066cc"] ,variant = 'primary'}: ButtonProps) => {
+
   return (
     <Pressable
       onPress={onPress}
@@ -11,14 +15,17 @@ const ButtonAndroid = ({ onPress, title, style, linerGradient = ["#7F7FD5", "#86
       {({ pressed }) => (
         <LinearGradient
           // Button Linear Gradient
-          colors={[...linerGradient]}
+          colors={variantStyle[variant].colors}
           style={styles.button}
+          start={{ x: 0, y: 0 }}
+  end={{ x: 1, y: 0 }}
+
         >
-          <Text
+          <ThemedText
             style={[styles.text]}
           >
             {title}
-          </Text>
+          </ThemedText>
         </LinearGradient>
       )}
     </Pressable>
@@ -27,12 +34,17 @@ const ButtonAndroid = ({ onPress, title, style, linerGradient = ["#7F7FD5", "#86
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10,
-    boxShadow: "0px 2px 2px  rgba(0, 0, 0, 0.25)",
+    padding: 12,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
     alignItems: "center",
     borderRadius: 18,
-    borderWidth: 1,
-    borderColor: "rgb(113, 132, 155)",
 
   },
   pressed: {

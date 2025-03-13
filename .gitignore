@@ -35,4 +35,17 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# platforms
+ios/build/
+ios/Pods/
+ios/Podfile.lock
+ios/Podfile
+ios/*.xcodeproj
+ios/*.xcworkspace
+android/**
+android/app/build/
+android/local.properties
+android/.gradle
+android/captures/
+
 app-example

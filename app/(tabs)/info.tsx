@@ -1,3 +1,4 @@
+import { ThemedText } from "@/components/ThemedText";
 import React from "react";
 import {
   View,
@@ -16,7 +17,7 @@ const App = () => {
   return (
 
       <View style={styles.container}>
-        <Text>Thông tin</Text>
+        <ThemedText>Thông tin</ThemedText>
       </View>
 
   );

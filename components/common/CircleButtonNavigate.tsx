@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { ThemedText } from "../ThemedText";
 
 interface CircleButtonNavigateProps {
   to: Href;
@@ -34,7 +35,7 @@ export default function CircleButtonNavigate({
           { width: size, height: size, borderRadius: size / 2 }, // Đảm bảo hình tròn
         ]}
       >
-        <View style={styles.innerContainer}><Text>{icon}</Text></View>
+        <View style={styles.innerContainer}><ThemedText>{icon}</ThemedText></View>
       </LinearGradient>
     </Link>
   );

@@ -5,7 +5,7 @@ import GoalSQL from "@/sqlite-database/goal.sql";
 async function getAll(): Promise<IGoal[]> {
   try {
     const db = await openDB();
-    const result = await db.getAllAsync("SELECT * FROM goals;");
+    const result = await db.getAllAsync("SELECT * FROM goals WHERE isDeleted = 0 OR isDeleted IS NULL;");
     return result as IGoal[];
   } catch (error) {
     console.log(error);
@@ -31,12 +31,61 @@ async function deleteById(id: number): Promise<boolean> {
       return false;
     }
 
-    await db.runAsync("DELETE FROM goals WHERE id = ?;", [id]);
+    const deleteAt = new Date().toISOString();
+    await db.runAsync("UPDATE goals SET deleteAt = ? WHERE id = ?;", [
+      deleteAt,
+      id,
+    ]);
     return true;
   } catch (error) {
     console.log(error);
     return false;
   }
+}
+
+async function update(goal: IGoal): Promise<boolean> {
+  try {
+    const db = await openDB();
+
+    if (!(await veryfyCanEditId(goal.id))) {
+      return false;
+    }
+
+    let oldGoal = await getById(goal.id);
+    if (!oldGoal) {
+      return false;
+    }
+
+    oldGoal = {
+      ...oldGoal,
+      name: goal.name,
+      description: goal.description,
+      groupId: goal.groupId,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const sql = GoalSQL.getUpdateSQLReq(oldGoal);
+    await db.runAsync(sql);
+    return true;
+  } catch (error) {
+    console.log("goal.repo.ts >> update >> ", error);
+    return false;
+  }
+}
+
+async function veryfyCanEditId(id: number): Promise<boolean> {
+  const goal = await getById(id);
+  if (!goal) {
+    return false;
+  }
+  if (!goal.canEdit) {
+    return false;
+  }
+  if (goal.isDeleted) {
+    return false;
+  }
+
+  return true;
 }
 
 async function veryfyCanDeleteId(id: number): Promise<boolean> {
@@ -47,6 +96,10 @@ async function veryfyCanDeleteId(id: number): Promise<boolean> {
   if (!goal.canDelete) {
     return false;
   }
+  if (goal.isDeleted) {
+    return false;
+  }
+
   return true;
 }
 
@@ -68,6 +121,7 @@ const GoalRepository = {
   getById,
   create,
   deleteById,
+  update
 };
 
 export default GoalRepository;

@@ -25,7 +25,7 @@ export default function TabLayout() {
           }
         })
         .catch((err) => {
-          console.log("err", err);
+          console.log("err (tab)_layout.ts", err);
           dispatch(setGroups([]));
         })
       ;
@@ -38,7 +38,7 @@ export default function TabLayout() {
           }
         })
         .catch((err) => {
-          console.log("err", err);
+          console.log("err (tab)_layout.ts", err);
           dispatch(setGoals([]));
         });
     };
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 15,
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 8,
   },
   text: {
     backgroundColor: "transparent",

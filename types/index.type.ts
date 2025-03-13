@@ -6,9 +6,9 @@ export interface IFile {
 
 
 export interface IBaseModel {
-  id?: number;
+  id: number;
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string;
-  isDeleted?: boolean;
+  isDeleted: boolean;
 }

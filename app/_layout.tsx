@@ -6,7 +6,7 @@ import {
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -14,14 +14,52 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Provider } from "react-redux";
 import { store } from "@/stores/store";
 import { openDB } from "@/sqlite-database";
+// import PushNotification from "react-native-push-notification";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+// // Cấu hình thông báo
+// const configureNotification = () => {
+//   PushNotification.configure({
+//     onNotification: (notification: any) => {
+//       console.log("NOTIFICATION:", notification);
+//     },
+//     requestPermissions: true,
+//   });
+// };
 
+// // Gửi thông báo
+// const sendNotification = (message: string) => {
+//   PushNotification.localNotification({
+//     title: "Nhắc nhở",
+//     message: message,
+//     playSound: true,
+//     soundName: "default",
+//   });
+// };
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
+  const [alarms] = useState(["08:00", "12:30", "18:00"]);
+
+  // useEffect(() => {
+  //   configureNotification();
+
+  //   // Kiểm tra thời gian mỗi phút
+  //   const interval = setInterval(() => {
+  //     const now = new Date();
+  //     const currentTime = `${String(now.getHours()).padStart(2, "0")}:${String(
+  //       now.getMinutes()
+  //     ).padStart(2, "0")}`;
+
+  //     if (alarms.includes(currentTime)) {
+  //       sendNotification(`Đến giờ: ${currentTime}`);
+  //     }
+  //   }, 60000); // Kiểm tra mỗi phút
+
+  //   return () => clearInterval(interval);
+  // }, [alarms]);
 
   useEffect(() => {
     if (loaded) {
@@ -31,8 +69,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     openDB();
-  }
-  , []);
+  }, []);
 
   if (!loaded) {
     return null;
@@ -60,8 +97,12 @@ export default function RootLayout() {
           {/* Optionally configure static options outside the route.*/}
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
-            name="(no_on_tabs_bar)/create-goal"
+            name="(no_on_tabs_bar)/create-goal/index"
             options={{ title: "Thêm mục tiêu" }}
+          />
+          <Stack.Screen
+            name="(no_on_tabs_bar)/create-goal/create"
+            options={{ title: "Tạo mục tiêu của bạn" }}
           />
           <Stack.Screen name="+not-found" />
         </Stack>

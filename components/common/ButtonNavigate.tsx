@@ -11,10 +11,12 @@ import {
   View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { ThemedText } from "../ThemedText";
 
 interface ButtonNavigateProps {
   to: Href;
-  icon: typeof FontAwesome6;
+  title: string;
+  icon?: typeof FontAwesome6;
   style?: StyleProp<TextStyle>;
   size?: 48 | 64 | 96 | 128;
 }
@@ -24,7 +26,9 @@ export default function ButtonNavigate({
   icon,
   style,
   size = 48,
+  title,
 }: ButtonNavigateProps) {
+  console.log("ButtonNavigate: to", to);
   return (
     <Link href={to} style={[style]}>
       <LinearGradient
@@ -33,7 +37,7 @@ export default function ButtonNavigate({
           styles.container,
         ]}
       >
-        <View style={styles.innerContainer}><Text>{icon}</Text></View>
+        <View style={styles.innerContainer}><ThemedText>{title}{icon}</ThemedText></View>
       </LinearGradient>
     </Link>
   );

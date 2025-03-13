@@ -1,5 +1,6 @@
 import { Pressable, Text } from 'react-native';
 import { ButtonProps } from './Button';
+import { ThemedText } from '@/components/ThemedText';
 
 
 const ButtonIOS = (
@@ -16,7 +17,7 @@ const ButtonIOS = (
               ]}
             >
               {({ pressed }) => (
-                <Text
+                <ThemedText
                   style={{
                     fontSize: 20,
                     color: pressed ? "rgb(68, 33, 133)" : "black",
@@ -24,7 +25,7 @@ const ButtonIOS = (
                   }}
                 >
                   {title}
-                </Text>
+                </ThemedText>
               )}
             </Pressable>
   )

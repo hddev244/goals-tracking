@@ -27,9 +27,17 @@ function getInsertSQLReq(values: IGoalRequest[]): string {
   return sql;
 }
 
+function getUpdateSQLReq(goal: IGoal): string {
+  const sql = `UPDATE goals SET name = '${goal.name}', description = '${goal.description}', groupId = ${goal.groupId}, canDelete = ${
+    goal.canDelete ? 1 : 0
+  }, canEdit = ${goal.canEdit ? 1 : 0}, updatedAt = '${goal.updatedAt}' WHERE id = ${goal.id};`;
+  return sql;
+}
+
 const GoalSQL = {
   getInsertSQL,
   getInsertSQLReq,
+  getUpdateSQLReq
 };
 
 export default GoalSQL;

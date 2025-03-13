@@ -11,6 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import { Button } from "@/components/common/manual-platform/Button/Button";
 import { LinearGradient } from "expo-linear-gradient";
+import { ThemedText } from "@/components/ThemedText";
 
 const App = () => {
   const windownWidth = useWindowDimensions().width;
@@ -19,7 +20,7 @@ const App = () => {
   return (
 
       <View style={styles.container}>
-      <Text>Theo dõi</Text>
+      <ThemedText>Theo dõi</ThemedText>
       </View>
   );
 };
